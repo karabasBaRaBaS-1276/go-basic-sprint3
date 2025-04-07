@@ -25,7 +25,7 @@ func main() {
 }
 
 // Подсчет количества слов в тексте без учета регистра.
-// Вторым параметром возвращается сипсок слов отсортированных по частоте от большего к меньшему
+// Вторым параметром возвращается список слов, отсортированных по частоте от большего к меньшему
 func CalcWorld(text string) (result map[string]int, sortWorlds []string) {
 	result = make(map[string]int)
 	arrayWorlds := strings.Fields(strings.ToLower(text))
