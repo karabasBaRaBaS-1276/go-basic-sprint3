@@ -8,7 +8,7 @@ func main() {
 	fmt.Println("=============================================")
 	//
 	a := 15
-	b := 3
+	b := 0
 	//
 	fmt.Printf("Дано:\na = %3d\nb = %3d\n", a, b)
 	fmt.Println("=============================================")
@@ -21,6 +21,7 @@ func main() {
 		return a * b
 	}
 	mapFunc["Частное:      "] = func(a int, b int) int {
+		// тут может быть деление на 0. Специально "забыли" про проверку, чтобы проверить работу defer
 		return a / b
 	}
 
@@ -32,14 +33,22 @@ func main() {
 
 // Операции над числами. Сама операция передается в виде функции operation
 func applyOperation(a int, b int, operation func(int, int) int) (result int) {
+	// Так как нет гарантии как хорошо написаны функции, то имеет смысл добавить восстановление в случае ошибок
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Восстановление работоспособности после ошибки. ", r)
+		}
+	}()
 	result = operation(a, b)
 	return
 }
 
+// Сложение
 func add(a, b int) int {
 	return a + b
 }
 
+// Вычитание
 func subtract(a, b int) int {
 	return a - b
 }
